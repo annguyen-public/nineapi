@@ -14,9 +14,9 @@ async function memes() {
     }
 }
 var i = 0;
-var myInt = setInterval(function () {
+/*var myInt = setInterval(function () {
     i++;
-}, 500);
+}, 500);*/
 
 app.get('/listUsers', function (req, res) {
 	memes();
