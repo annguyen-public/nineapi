@@ -24,9 +24,9 @@ MongoClient.connect(url, function(err, db) {
 });*/
 
 var i = 0;
-/*var myInt = setInterval(function () {
+var myInt = setInterval(function () {
     i++;
-}, 500);*/
+}, 2000);
 
 app.get('/listUsers', function (req, res) {
 	memes();
