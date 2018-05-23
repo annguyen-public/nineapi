@@ -31,9 +31,11 @@ var i = 0;
 app.get('/listUsers', function (req, res) {
 	memes();
 	res.end(JSON.stringify(i));
-})
+});
 
-var server = app.listen(80, function () {
+var port = process.env.PORT || 3000;
+
+var server = app.listen(port, function () {
 
   var host = server.address().address
   var port = server.address().port
