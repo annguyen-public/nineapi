@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+const db_name = 'nine_db';
 
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://nineuser:123@ds133550.mlab.com:33550/" + db_name;
