@@ -76,7 +76,7 @@ function updateDB(collection, record) {
     });
 }
 
-kpop(300);
+kpop(200);
 var myInt = setInterval(function () {
     kpop(2);
 }, 300000);
