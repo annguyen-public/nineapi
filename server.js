@@ -10,11 +10,11 @@ var url = "mongodb://nineuser:123@ds133550.mlab.com:33550/" + db_name;
 
 
 // nine fetcher
-async function kpop(num) {
+async function ninegag(collection, num) {
     try {
-        const scraper = new Scraper(num, 'kpop', 0);
+        const scraper = new Scraper(num, collection, 0);
     	 const posts = await scraper.scrap();
-        posts.forEach(post => updateDB('kpop', post));
+        posts.forEach(post => updateDB(collection, post));
     }
     catch (err) {
         console.log(err);
@@ -50,18 +50,16 @@ function findDB(collection, query){
   });
 }
 
-function orderByDate(collection){
+async function orderByDate(collection){
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db(db_name);
-    console.log("a");
     var mysort = { timestamp: -1 };
     dbo.collection(collection).find().limit(3).sort(mysort).toArray(function(err, result) {
       if (err) throw err;
-      console.log(result);
+      return result;
       db.close();
     });
-    console.log("b");
   });
 }
 
@@ -92,15 +90,12 @@ function updateDB(collection, record) {
     });
 }
 
-kpop(200);
+ninegag('kpop',200);
+ninegag('girl',200);
 var myInt = setInterval(function () {
-    kpop(2);
+    ninegag('kpop',2);
+    ninegag('girl',2);
 }, 300000);
-
-app.get('/getKpopNewest', function (req, res) {
-	orderByDate('kpop');
-	res.end(JSON.stringify('OK'));
-});
 
 var port = process.env.PORT || 3000;
 
@@ -109,6 +104,6 @@ var server = app.listen(port, function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log("Example app listening at http://%s:%s", host, port)
+  console.log("Spider server is http://%s:%s", host, port)
 
 })
