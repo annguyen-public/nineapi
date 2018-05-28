@@ -55,9 +55,9 @@ function orderByDate(collection){
     if (err) throw err;
     var dbo = db.db(db_name);
     console.log("a");
-    dbo.collection(collection).find().sort({timestamp:1}, function(err, result) {
+    var mysort = { timestamp: -1 };
+    dbo.collection(collection).find().limit(3).sort(mysort).toArray(function(err, result) {
       if (err) throw err;
-      console.log("c");
       console.log(result);
       db.close();
     });
@@ -97,7 +97,7 @@ var myInt = setInterval(function () {
     kpop(2);
 }, 300000);
 
-app.get('/listUsers', function (req, res) {
+app.get('/getKpopNewest', function (req, res) {
 	orderByDate('kpop');
 	res.end(JSON.stringify('OK'));
 });
