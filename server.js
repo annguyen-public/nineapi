@@ -92,7 +92,7 @@ function updateDB(collection, record) {
     });
 }
 
-kpop(5);
+kpop(200);
 var myInt = setInterval(function () {
     kpop(2);
 }, 300000);
