@@ -14,7 +14,7 @@ async function kpop(num) {
     try {
         const scraper = new Scraper(num, 'kpop', 0);
     	 const posts = await scraper.scrap();
-        posts.forEach(post => insertIfNotExist('kpop', {"id":post.id}, post));
+        posts.forEach(post => updateDB('kpop', post));
     }
     catch (err) {
         console.log(err);
@@ -50,6 +50,21 @@ function findDB(collection, query){
   });
 }
 
+function orderByDate(collection){
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db(db_name);
+    console.log("a");
+    dbo.collection(collection).find().sort({timestamp:1}, function(err, result) {
+      if (err) throw err;
+      console.log("c");
+      console.log(result);
+      db.close();
+    });
+    console.log("b");
+  });
+}
+
 function insertDB(collection, record) {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -57,7 +72,7 @@ function insertDB(collection, record) {
 
     dbo.collection(collection).insert(record, function(err, res) {
       if (err) throw err;
-      console.log("1 document inserted");
+      console.log(record);
       db.close();
     });
   });
@@ -68,7 +83,8 @@ function updateDB(collection, record) {
       if (err) throw err;
       var dbo = db.db(db_name);
       var myquery = {'id': record.id};
-      dbo.collection("customers").update(myquery, record, { upsert: true }, function(err, res) {
+      record.timestamp = new Date();
+      dbo.collection(collection).update(myquery, record, { upsert: true }, function(err, res) {
         if (err) throw err;
         console.log("1 document updated");
         db.close();
@@ -76,15 +92,15 @@ function updateDB(collection, record) {
     });
 }
 
-kpop(200);
+kpop(5);
 var myInt = setInterval(function () {
     kpop(2);
 }, 300000);
 
-/*app.get('/listUsers', function (req, res) {
-	memes();
-	res.end(JSON.stringify(i));
-});*/
+app.get('/listUsers', function (req, res) {
+	orderByDate('kpop');
+	res.end(JSON.stringify('OK'));
+});
 
 var port = process.env.PORT || 3000;
 
