@@ -114,7 +114,7 @@ var autoping = setInterval(function () {
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
   });
-}, 1000);
+}, 900000);
 
 var port = process.env.PORT || 3000;
 
