@@ -90,12 +90,12 @@ function updateDB(collection, record) {
     });
 }
 
-ninegag('kpop',200);
-ninegag('girl',200);
+//ninegag('kpop',200);
+//ninegag('girl',200);
 var myInt = setInterval(function () {
-    ninegag('kpop',2);
-    ninegag('girl',2);
-}, 300000);
+    ninegag('kpop',200);
+    ninegag('girl',200);
+}, 600000);
 
 var autoping = setInterval(function () {
   var http = require('http');
@@ -114,7 +114,7 @@ var autoping = setInterval(function () {
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
   });
-}, 900000);
+}, 1000);
 
 var port = process.env.PORT || 3000;
 
