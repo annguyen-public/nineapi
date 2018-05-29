@@ -100,7 +100,7 @@ var myInt = setInterval(function () {
 var autoping = setInterval(function () {
   var http = require('http');
   var options = {
-    host: 'fetchvuivuidata.herokuapp.com/',
+    host: 'fetchvuivuidata.herokuapp.com',
     port: 80,
     path: '/'
   };
