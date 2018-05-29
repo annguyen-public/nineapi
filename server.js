@@ -97,6 +97,25 @@ var myInt = setInterval(function () {
     ninegag('girl',2);
 }, 300000);
 
+var autoping = setInterval(function () {
+  var http = require('http');
+  var options = {
+    host: 'fetchvuivuidata.herokuapp.com/',
+    port: 80,
+    path: '/'
+  };
+
+  http.get(options, function(res) {
+    console.log("Got response: " + res.statusCode);
+
+    res.on("data", function(chunk) {
+      console.log("BODY: " + chunk);
+    });
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  });
+}, 900000);
+
 var port = process.env.PORT || 3000;
 
 var server = app.listen(port, function () {
