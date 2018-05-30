@@ -8,6 +8,14 @@ const Scraper = NineGag.Scraper;
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://nineuser:123@ds133550.mlab.com:33550/" + db_name;
 
+var http = require('http');
+
+
+var intagram_u = ["mienguyen", "trammanhhh305", "manttien", "hoaiann_", 
+"celinefarach", "mollyomalia", "loren", "jhulia_pimentel", "megan.frey", 
+"ribisachi", "salimhwg", "imkhangan", "ngocthao_official", "quynhanhshyn_", "chipupu"];
+//var intagram_u = ["mienguyen"];
+
 
 // nine fetcher
 async function ninegag(collection, num) {
@@ -19,6 +27,36 @@ async function ninegag(collection, num) {
     catch (err) {
         console.log(err);
     }
+}
+
+function intagram(user_name, count){
+  var options = {
+    host: 'intatest.herokuapp.com',
+    port: 80,
+    path: '/examples/getAccountMediasByUsername.php?u=' + user_name + '&c=' + count
+  };
+
+  http.get(options, function(res) {
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function(){
+        try{
+          var response = JSON.parse(body);
+          for (var i = 0; i < response.length; i++) {          
+            response[i].user_name = user_name;
+            updateDB('intagram', response[i]);
+          }
+        }
+        catch(e)
+        {console.log(e);}
+    });
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  });
 }
 
 
@@ -97,8 +135,13 @@ var myInt = setInterval(function () {
     ninegag('girl',200);
 }, 600000);
 
+var feedInta = setInterval(function () {
+  for (var i = 0; i < intagram_u.length; i++) {
+    intagram(intagram_u[i], 50);
+  }
+}, 600000);
+
 var autoping = setInterval(function () {
-  var http = require('http');
   var options = {
     host: 'fetchvuivuidata.herokuapp.com',
     port: 80,
