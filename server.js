@@ -141,7 +141,7 @@ var feedInta = setInterval(function () {
   }
 }, 600000);
 
-var autoping = setInterval(function () {
+/*var autoping = setInterval(function () {
   var options = {
     host: 'fetchvuivuidata.herokuapp.com',
     port: 80,
@@ -157,7 +157,7 @@ var autoping = setInterval(function () {
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
   });
-}, 900000);
+}, 900000);*/
 
 var port = process.env.PORT || 3000;
 
