@@ -139,7 +139,7 @@ var feedInta = setInterval(function () {
   for (var i = 0; i < intagram_u.length; i++) {
     intagram(intagram_u[i], 50);
   }
-}, 600000);
+}, 7200000);
 
 /*var autoping = setInterval(function () {
   var options = {
