@@ -13,7 +13,10 @@ var http = require('http');
 
 var intagram_u = ["mienguyen", "trammanhhh305", "manttien", "hoaiann_", 
 "celinefarach", "mollyomalia", "loren", "jhulia_pimentel", "megan.frey", 
-"ribisachi", "salimhwg", "imkhangan", "ngocthao_official", "quynhanhshyn_", "chipupu"];
+"ribisachi", "salimhwg", "imkhangan", "ngocthao_official", "quynhanhshyn_", "chipupu", 
+"gaixinh.vn", "teengirlsvn", "gaixinh.official", "hoingamgaixinh", "linh.lt98"];
+
+var ninePage = ["kpop", "girl"];
 //var intagram_u = ["mienguyen"];
 
 
@@ -31,7 +34,7 @@ async function ninegag(collection, num) {
 
 function intagram(user_name, count){
   var options = {
-    host: 'intatest.herokuapp.com',
+    host: 'intascraper.herokuapp.com',
     port: 80,
     path: '/examples/getAccountMediasByUsername.php?u=' + user_name + '&c=' + count
   };
@@ -130,7 +133,7 @@ function updateDB(collection, record) {
 
 //ninegag('kpop',200);
 //ninegag('girl',200);
-var myInt = setInterval(function () {
+/*var myInt = setInterval(function () {
     ninegag('kpop',200);
     ninegag('girl',200);
 }, 600000);
@@ -139,7 +142,30 @@ var feedInta = setInterval(function () {
   for (var i = 0; i < intagram_u.length; i++) {
     intagram(intagram_u[i], 50);
   }
-}, 600000);
+}, 600000);*/
+
+function scrapeNine(){
+  for (var i = 0; i < ninePage.length; i++) {
+    ninegag(ninePage[i],200);
+  }
+}
+
+function scrapeInsta(){
+  for (var i = 0; i < intagram_u.length; i++) {
+    intagram(intagram_u[i], 50);
+  }
+}
+
+app.get('/scrapeNow', function (req, res) {
+  try{
+    scrapeNine();
+    scrapeInsta();
+  }
+  catch(e){
+    console.log(e);
+  }
+  res.end('OK');
+});
 
 /*var autoping = setInterval(function () {
   var options = {
@@ -166,6 +192,6 @@ var server = app.listen(port, function () {
   var host = server.address().address
   var port = server.address().port
 
-  console.log("Spider server is http://%s:%s", host, port)
+  console.log("scrape bot http://%s:%s", host, port)
 
 })
